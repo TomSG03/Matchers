@@ -1,14 +1,31 @@
-import healthStatus from '../src/js/app';
+import healthSort from '../src/js/app';
 
-test.each([
-  ['Маг', 90, 'healthy'],
-  ['Маг', 50, 'wounded'],
-  ['Маг', 40, 'wounded'],
-  ['Маг', 10, 'critical'],
-])(
-  'return healht status',
-  (name, health, expected) => {
-    const received = healthStatus({ name, health });
-    expect(received).toBe(expected);
-  },
-);
+test('Sort health status', () => {
+  const person = [
+    { name: 'мечник', health: 10 },
+    { name: 'маг', health: 100 },
+    { name: 'лучник', health: 80 },
+  ];
+  const received = healthSort(person);
+  const expected = [
+    { name: 'маг', health: 100 },
+    { name: 'лучник', health: 80 },
+    { name: 'мечник', health: 10 },
+  ];
+  expect(received).toEqual(expected);
+});
+
+test('Sort health status', () => {
+  const person = [
+    { name: 'мечник', health: 0 },
+    { name: 'маг', health: 80 },
+    { name: 'лучник', health: -1 },
+  ];
+  const received = healthSort(person);
+  const expected = [
+    { name: 'маг', health: 80 },
+    { name: 'мечник', health: 0 },
+    { name: 'лучник', health: -1 },
+  ];
+  expect(received).toEqual(expected);
+});
